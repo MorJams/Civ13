@@ -170,7 +170,7 @@
 /proc/docopytext(var/string, var/start = TRUE, var/end = FALSE)
 	if (istext(string) && isnum(start) && isnum(end))
 		if (start > 0)
-			return copytext(string, start, end)
+			return copytext_char(string, start, end)
 
 proc/n_repeat(var/string, var/amount)
 	if (istext(string) && isnum(amount))
@@ -192,7 +192,7 @@ proc/n_reverse(var/string)
 		for (i=length(string), i>0, i--)
 			if (i>=1000)
 				break
-			newstring = newstring + copytext(string, i, i+1)
+			newstring = newstring + copytext_char(string, i, i+1)
 
 		return newstring
 
@@ -239,7 +239,7 @@ proc/n_inrange(var/num, var/min=-1, var/max=1)
 		if (count == FALSE)
 			return haystack
 		//var/nlen = lenh + ((lenb - lena) * count)
-		var/buf = copytext(haystack,1,dat[1]) // Prefill
+		var/buf = copytext_char(haystack,1,dat[1]) // Prefill
 		var/lastReadPos = FALSE
 		for (i = TRUE, i <= count, i++)
 			var/precopy = dat[i] - lastReadPos-1
@@ -247,12 +247,12 @@ proc/n_inrange(var/num, var/min=-1, var/max=1)
 			//fixed (char* dest = target, src = source)
 			//CharCopy (dest + targetIndex, src + sourceIndex, count);
 			//CharCopy (dest + curPos, source + lastReadPos, precopy);
-			buf+=copytext(haystack,lastReadPos,precopy)
-			log_misc("buf+=copytext([haystack],[lastReadPos],[precopy])")
+			buf+=copytext_char(haystack,lastReadPos,precopy)
+			log_misc("buf+=copytext_char([haystack],[lastReadPos],[precopy])")
 			log_misc("[buf]")
 			lastReadPos = dat[i] + lena
 			//CharCopy (dest + curPos, replace, newValue.length);
 			buf+=b
 			log_misc("[buf]")
-		buf+=copytext(haystack,lastReadPos, FALSE)
+		buf+=copytext_char(haystack,lastReadPos, FALSE)
 		return buf
